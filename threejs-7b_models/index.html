@@ -55,9 +55,9 @@
 
     function handle_load(gltf) {
         var model = gltf.scene;
-                model.position.set( 0, 0, 0 );
-                model.rotation.y = 45/180*Math.PI;
-				model.scale.set( 0.2, 0.2, 0.2 );
+                model.position.set( 0, 0, -2 );
+                model.rotation.y = 90/180*Math.PI;
+				model.scale.set( 0.25, 0.25, 0.25 );
 
         console.log(gltf);
         mesh = gltf.scene;
