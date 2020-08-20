@@ -28,7 +28,7 @@
       canvas: myCanvas, 
       antialias: true
     });
-    renderer.setClearColor(0x000000);
+    renderer.setClearColor(0x888888,1);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -37,12 +37,13 @@
 
     //SCENE
     scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xdddddd);
 
     //LIGHTS
-    var light = new THREE.AmbientLight(0xffffff, 0.5);
+    var light = new THREE.AmbientLight(0xffffff, 100);
     scene.add(light);
 
-    var light2 = new THREE.PointLight(0xffffff, 0.5);
+    var light2 = new THREE.PointLight(0xffffff, 10);
     scene.add(light2);
   
     var loader = new THREE.GLTFLoader();
