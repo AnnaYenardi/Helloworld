@@ -70,14 +70,7 @@
 			dirLight.position.set( 5, 2, 8 );
 			scene.add( dirLight );
 
-			// envmap
-			var path = 'textures/cube/Park2/';
-			var format = '.jpg';
-			var envMap = new THREE.CubeTextureLoader().load( [
-				path + 'posx' + format, path + 'negx' + format,
-				path + 'posy' + format, path + 'negy' + format,
-				path + 'posz' + format, path + 'negz' + format
-			] );
+	  
 
 			var dracoLoader = new DRACOLoader();
 			dracoLoader.setDecoderPath( 'js/libs/draco/gltf/' );
