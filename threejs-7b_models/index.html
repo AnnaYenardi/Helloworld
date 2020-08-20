@@ -49,6 +49,9 @@
     var loader = new THREE.GLTFLoader();
 
     loader.load('BISHAN ROOM.glb', handle_load);
+    var model = gltf.scene;
+				model.position.set( 1, 1, 0 );
+				model.scale.set( 0.05, 0.05, 0.05 );
 
     var mesh;
 
