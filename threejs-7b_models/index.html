@@ -78,18 +78,8 @@
 
 				var model = gltf.scene;
 				model.position.set( 1, 1, 0 );
-				model.scale.set( 0.01, 0.01, 0.01 );
-
-
-			window.onresize = function () {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-			};
-
+                model.scale.set( 0.01, 0.01, 0.01 );
+            })
 
 		</script>
 
