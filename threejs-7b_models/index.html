@@ -1,142 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Test Shadows</title>
+		<title>three.js webgl - animation - keyframes</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			body {
+				background-color: #bfe3dd;
+				color: #000;
+			}
+
+			a {
+				color: #2983ff;
+			}
+		</style>
 	</head>
+
 	<body>
 
-        <script src="three.js"></script>
-        <script src="GLTFLoader.js"></script>
+		<div id="container"></div>
+
+		<div id="info">
+			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - animation - keyframes<br/>
+			Model: <a href="https://www.artstation.com/artwork/1AGwX" target="_blank" rel="noopener">Littlest Tokyo</a> by
+			<a href="https://www.artstation.com/glenatron" target="_blank" rel="noopener">Glen Fox</a>, CC Attribution.
+		</div>
 
 		<script type="module">
-
-			// ------------------------------------------------
-			// Import statements
-			// ------------------------------------------------
-
+		
 			import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js';
+			
 			import { OrbitControls } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
+			import { GLTFLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/GLTFLoader.js';
+			import { DRACOLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/DRACOLoader.js';
+			import Stats from 'https://unpkg.com/three@0.119.1/examples/jsm/libs/stats.module.js';
 
-			// ------------------------------------------------
-			// Main code
-			// ------------------------------------------------
+			var scene, camera, dirLight, stats;
+			var renderer, mixer, controls;
 
-			var camera, scene, renderer, light;
+			var clock = new THREE.Clock();
+			var container = document.getElementById( 'container' );
 
-			init();
-			animate();
+			stats = new Stats();
+			container.appendChild( stats.dom );
 
-			// ------------------------------------------------
-			// Initialization function
-			// ------------------------------------------------
+			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.outputEncoding = THREE.sRGBEncoding;
+			container.appendChild( renderer.domElement );
 
-			function init() {
+			scene = new THREE.Scene();
+			scene.background = new THREE.Color( 0xbfe3dd );
 
-				// CAMERA AND SCENE
+			camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
+			camera.position.set( 5, 2, 8 );
 
-				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
-				camera.position.set( 100, 100, 100 );
-				camera.lookAt( 0, 0, 0 );
-				camera.up.set( 0, 0, 1 );
-				scene = new THREE.Scene();
+			controls = new OrbitControls( camera, renderer.domElement );
+			controls.target.set( 0, 0.5, 0 );
+			controls.update();
+			controls.enablePan = false;
+			controls.enableDamping = true;
 
-				// TEST SHADOWS
-				// https://threejs.org/docs/#api/en/lights/shadows/DirectionalLightShadow
+			scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 0.4 ) );
 
-				// ============================================
+			dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+			dirLight.position.set( 5, 2, 8 );
+			scene.add( dirLight );
 
-				//Create a WebGLRenderer and turn on shadows in the renderer
-				renderer = new THREE.WebGLRenderer();
-				renderer.shadowMap.enabled = true;
-				renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+			// envmap
+			var path = 'Park2/';
+			var format = '.jpg';
+			var envMap = new THREE.CubeTextureLoader().load( [
+				path + 'posx' + format, path + 'negx' + format,
+				path + 'posy' + format, path + 'negy' + format,
+				path + 'posz' + format, path + 'negz' + format
+			] );
 
-				//Create a DirectionalLight and turn on shadows for the light
-				light = new THREE.DirectionalLight( 0xffffff, 1, 1000 );
-				light.position.set( 10, 0, 100 ); 			//default; light shining from top
-				light.castShadow = true;            // default false
-				scene.add( light );
+			var dracoLoader = new DRACOLoader();
+			dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.119.1/examples/js/libs/draco/gltf/' );
 
-				//Set up shadow properties for the light
-				light.shadow.mapSize.width = 1024;
-				light.shadow.mapSize.height = 1024;
-				light.shadow.camera.near = 0.5;
-				light.shadow.camera.far = 200;
-				light.shadow.camera.left = -20;
-				light.shadow.camera.bottom = -20;
-				light.shadow.camera.top = 20;
-				light.shadow.camera.right = 20;
+			var loader = new GLTFLoader();
+			loader.setDRACOLoader( dracoLoader );
+			loader.load( 'BISHAN ROOM.glb', function ( gltf ) {
 
-				//Create a sphere that cast shadows (but does not receive them)
-				var sphereGeometry = new THREE.SphereBufferGeometry( 5, 32, 32 );
-				var sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xff0000 } );
-				var sphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
-				sphere.position.z = 20;
-				sphere.castShadow = true; //default is false
-				sphere.receiveShadow = false; //default
-				scene.add( sphere );
+				var model = gltf.scene;
+				model.position.set( 1, 1, 0 );
+				model.scale.set( 0.01, 0.01, 0.01 );
+				model.traverse( function ( child ) {
 
-				//Create a plane that receives shadows (but does not cast them)
-				var planeGeometry = new THREE.PlaneBufferGeometry( 100, 100, 32, 32 );
-				var planeMaterial = new THREE.MeshStandardMaterial( { color: 'white' } )
-				var plane = new THREE.Mesh( planeGeometry, planeMaterial );
-				plane.receiveShadow = true;
-				scene.add( plane );
+					if ( child.isMesh ) child.material.envMap = envMap;
 
-				//SCENE
-                //scene = new THREE.Scene();
+				} );
 
-                //LIGHTS
-                //var light = new THREE.AmbientLight(0xffffff, 0.5);
-                //scene.add(light);
+				scene.add( model );
 
-                //var light2 = new THREE.PointLight(0xffffff, 0.5);
-                //scene.add(light2);
+				mixer = new THREE.AnimationMixer( model );
+				mixer.clipAction( gltf.animations[ 0 ] ).play();
 
-                //var loader = new THREE.GLTFLoader();
+				animate();
 
-                //loader.load('BISHAN ROOM.glb', handle_load);
+			}, undefined, function ( e ) {
 
-                //var mesh;
+				console.error( e );
 
-                //function handle_load(gltf) {
+			} );
 
-                //console.log(gltf);
-                //mesh = gltf.scene;
-                //console.log(mesh.children[0]);
-                //mesh.children[0].material = new THREE.MeshLambertMaterial();
-                //scene.add( mesh );
-                //mesh.position.z = -10;
-                //}
 
-                //Create a helper for the shadow camera (optional)
-				var helper = new THREE.CameraHelper( light.shadow.camera );
-				scene.add( helper );
+			window.onresize = function () {
 
-				// ============================================
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
 
-				// ORBIT CONTROL
-
-				var controls = new OrbitControls( camera, renderer.domElement );
-
-				// RENDERER
-
-				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				document.body.appendChild( renderer.domElement );
-			}
 
-			// ------------------------------------------------
-			// Animation loop
-			// ------------------------------------------------
+			};
 
-			function animate() {
-				requestAnimationFrame( animate );
-				renderer.render( scene, camera );
-			}
 
 		</script>
+
 	</body>
+
 </html>
