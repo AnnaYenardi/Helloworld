@@ -56,8 +56,14 @@
             scene = new THREE.Scene();
 
             
-            //Create a WebGLRenderer and turn on shadows in the renderer
-            renderer = new THREE.WebGLRenderer();
+            //Create a WebGLRenderer
+            renderer = new THREE.WebGLRenderer({
+                canvas: myCanvas, 
+                antialias: true
+            });
+            renderer.setClearColor(0x000000);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
 
             //Create a DirectionalLight and turn on shadows for the light
             light = new THREE.DirectionalLight( 0xffffff, 1, 1000 );
