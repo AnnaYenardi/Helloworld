@@ -77,6 +77,22 @@
             var light2 = new THREE.PointLight(0xffffff, 0.5);
             scene.add(light2);
 
+            var loader = new THREE.GLTFLoader();
+
+            loader.load('untitled.glb', handle_load);
+
+            var mesh;
+
+            function handle_load(gltf) {
+
+                console.log(gltf);
+                mesh = gltf.scene;
+                console.log(mesh.children[0]);
+                mesh.children[0].material = new THREE.MeshLambertMaterial();
+		        scene.add( mesh );
+                mesh.position.z = -10;
+            }
+
             // ============================================
 
             // ORBIT CONTROL
@@ -98,12 +114,6 @@
 				sphere.castShadow = true; //default is false
 				sphere.receiveShadow = false; //default
 				scene.add( sphere );
-
-        // ------------------------------------------------
-        // Animation loop
-        // ------------------------------------------------
-
-
 
    	</script>
 	</body>
