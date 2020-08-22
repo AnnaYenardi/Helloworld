@@ -86,31 +86,31 @@
 				scene.add( plane );
 
 				//SCENE
-                scene = new THREE.Scene();
+                //scene = new THREE.Scene();
 
                 //LIGHTS
-                var light = new THREE.AmbientLight(0xffffff, 0.5);
-                scene.add(light);
+                //var light = new THREE.AmbientLight(0xffffff, 0.5);
+                //scene.add(light);
 
-                var light2 = new THREE.PointLight(0xffffff, 0.5);
-                scene.add(light2);
+                //var light2 = new THREE.PointLight(0xffffff, 0.5);
+                //scene.add(light2);
 
-                var loader = new THREE.GLTFLoader();
+                //var loader = new THREE.GLTFLoader();
 
-                loader.load('untitled.glb', handle_load);
+                //loader.load('BISHAN ROOM.glb', handle_load);
 
-                var mesh;
+                //var mesh;
 
-                function handle_load(gltf) {
+                //function handle_load(gltf) {
 
-                console.log(gltf);
-                mesh = gltf.scene;
-                console.log(mesh.children[0]);
-                mesh.children[0].material = new THREE.MeshLambertMaterial();
-                scene.add( mesh );
-                mesh.position.z = -10;
-                }
-                
+                //console.log(gltf);
+                //mesh = gltf.scene;
+                //console.log(mesh.children[0]);
+                //mesh.children[0].material = new THREE.MeshLambertMaterial();
+                //scene.add( mesh );
+                //mesh.position.z = -10;
+                //}
+
                 //Create a helper for the shadow camera (optional)
 				var helper = new THREE.CameraHelper( light.shadow.camera );
 				scene.add( helper );
