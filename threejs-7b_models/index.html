@@ -92,6 +92,12 @@
             mesh.children[0].material = new THREE.MeshLambertMaterial();
 		    scene.add( mesh );
             mesh.position.z = -10;
+
+            var loader = new THREE.GLTFLoader();
+
+            loader.load('BISHAN ROOM.glb', handle_load);
+    
+            var mesh;
         }
 
         // ------------------------------------------------
@@ -103,12 +109,6 @@
             renderer.render( scene, camera );
         }
 
-        var loader = new THREE.GLTFLoader();
-
-            loader.load('BISHAN ROOM.glb', handle_load);
-    
-
-            var mesh;
 
    	</script>
 	</body>
