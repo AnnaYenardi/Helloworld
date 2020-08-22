@@ -76,20 +76,7 @@
             renderer.setPixelRatio( window.devicePixelRatio );
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
-
-            //LIGHTS
-             var light = new THREE.AmbientLight(0x404040, 1);
-             scene.add(light);
-
-            var light2 = new THREE.PointLight(0xf5efe6, 1);
-            scene.add(light2);
-  
-            var loader = new THREE.GLTFLoader();
-
-            loader.load('BISHAN ROOM.glb', handle_load);
-    
-
-            var mesh;
+            
         }
 
         function handle_load(gltf) {
@@ -115,6 +102,13 @@
             requestAnimationFrame( animate );
             renderer.render( scene, camera );
         }
+
+        var loader = new THREE.GLTFLoader();
+
+            loader.load('BISHAN ROOM.glb', handle_load);
+    
+
+            var mesh;
 
    	</script>
 	</body>
