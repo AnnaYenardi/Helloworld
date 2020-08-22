@@ -78,22 +78,8 @@
             document.body.appendChild( renderer.domElement );
         }
 
-        function handle_load(gltf) {
-            var model = gltf.scene;
-                model.position.set( -9, -0.4, 0 );
-                model.rotation.x = -60/180*Math.PI;
-                model.rotation.z = -45/180*Math.PI;
-				model.scale.set( 0.06, 0.06, 0.06 );
-
-            console.log(gltf);
-            mesh = gltf.scene;
-            console.log(mesh.children[0]);
-            mesh.children[0].material = new THREE.MeshLambertMaterial();
-		    scene.add( mesh );
-            mesh.position.z = -10;
-
-            //LIGHTS
-            var light = new THREE.AmbientLight(0x404040, 100);
+        //LIGHTS
+        var light = new THREE.AmbientLight(0x404040, 100);
              scene.add(light);
 
             var light2 = new THREE.PointLight(0xf5efe6, 100);
@@ -104,6 +90,20 @@
             loader.load('BISHAN ROOM.glb', handle_load);
     
             var mesh;
+
+        function handle_load(gltf) {
+            var model = gltf.scene;
+                model.position.set( -9, -0.4, 0 );
+                model.rotation.x = -60/180*Math.PI;
+                model.rotation.z = -45/180*Math.PI;
+				model.scale.set( 0.6, 0.6, 0.6 );
+
+            console.log(gltf);
+            mesh = gltf.scene;
+            console.log(mesh.children[0]);
+            mesh.children[0].material = new THREE.MeshLambertMaterial();
+		    scene.add( mesh );
+            mesh.position.z = -10;
         }
 
         // ------------------------------------------------
