@@ -35,10 +35,6 @@
     	camera,
         myCanvas = document.getElementById('myCanvas');
         
-
-    // ORBIT CONTROL
-
-    var controls = new OrbitControls( camera );
     
     //RENDERER
     renderer = new THREE.WebGLRenderer({
@@ -48,6 +44,16 @@
     renderer.setClearColor(0x888888,1);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // ORBIT CONTROL
+
+    var controls = new OrbitControls( camera, renderer.domElement );
+
+    // RENDERER
+
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
 
     //CAMERA
     camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000 );
