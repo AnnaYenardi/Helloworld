@@ -80,18 +80,19 @@
 
         //LIGHTS
         var light = new THREE.AmbientLight(0x404040, 100);
-             scene.add(light);
+        scene.add(light);
 
-            var light2 = new THREE.PointLight(0xf5efe6, 100);
-            scene.add(light2);
+        var light2 = new THREE.PointLight(0xf5efe6, 100);
+        scene.add(light2);
   
-            var loader = new THREE.GLTFLoader();
+        var loader = new THREE.GLTFLoader();
 
-            loader.load('BISHAN ROOM.glb', handle_load);
+        loader.load('BISHAN ROOM.glb', handle_load);
     
-            var mesh;
+        var mesh;
 
         function handle_load(gltf) {
+            
             var model = gltf.scene;
                 model.position.set( -9, -0.4, 0 );
                 model.rotation.x = -60/180*Math.PI;
