@@ -93,10 +93,10 @@
             mesh.position.z = -10;
 
             //LIGHTS
-            var light = new THREE.AmbientLight(0x404040, 1);
+            var light = new THREE.AmbientLight(0x404040, 100);
              scene.add(light);
 
-            var light2 = new THREE.PointLight(0xf5efe6, 1);
+            var light2 = new THREE.PointLight(0xf5efe6, 100);
             scene.add(light2);
   
             var loader = new THREE.GLTFLoader();
