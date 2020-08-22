@@ -78,9 +78,8 @@
             document.body.appendChild( renderer.domElement );
 
             //LIGHTS
-
-            var light = new THREE.AmbientLight(0x404040, 1);
-            scene.add(light);
+             var light = new THREE.AmbientLight(0x404040, 1);
+             scene.add(light);
 
             var light2 = new THREE.PointLight(0xf5efe6, 1);
             scene.add(light2);
@@ -91,6 +90,7 @@
     
 
             var mesh;
+        }
 
         function handle_load(gltf) {
             var model = gltf.scene;
@@ -99,12 +99,12 @@
                 model.rotation.z = -45/180*Math.PI;
 				model.scale.set( 0.6, 0.6, 0.6 );
 
-        console.log(gltf);
-        mesh = gltf.scene;
-        console.log(mesh.children[0]);
-        mesh.children[0].material = new THREE.MeshLambertMaterial();
-		scene.add( mesh );
-        mesh.position.z = -10;
+            console.log(gltf);
+            mesh = gltf.scene;
+            console.log(mesh.children[0]);
+            mesh.children[0].material = new THREE.MeshLambertMaterial();
+		    scene.add( mesh );
+            mesh.position.z = -10;
         }
 
         // ------------------------------------------------
@@ -116,6 +116,6 @@
             renderer.render( scene, camera );
         }
 
-    </script>
-</body>
+   	</script>
+	</body>
 </html>
