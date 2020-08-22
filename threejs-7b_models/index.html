@@ -26,16 +26,22 @@
     <script type="module">
 
 
-    import * as THREE from '/three.module.js';
-    import { OrbitControls } from '/OrbitControls.js';
+        import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js';
+		import { OrbitControls } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
 
         
-
     var renderer,
     	scene,
     	camera,
-    	myCanvas = document.getElementById('myCanvas');
+        myCanvas = document.getElementById('myCanvas');
+        
+        init();
+		animate();
 
+    // ORBIT CONTROL
+
+    var controls = new OrbitControls( camera, renderer.domElement );
+    
     //RENDERER
     renderer = new THREE.WebGLRenderer({
       canvas: myCanvas, 
@@ -44,10 +50,6 @@
     renderer.setClearColor(0x888888,1);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
-
-    // ORBIT CONTROL
-
-    var controls = new OrbitControls( camera, renderer.domElement );
 
     //CAMERA
     camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -95,8 +97,6 @@
     function render() {
 
         delta += 0.1;
-
-        
 
     	renderer.render(scene, camera);
 
