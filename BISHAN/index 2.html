@@ -11,7 +11,7 @@
 			import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js';
 			
 			import { OrbitControls } from 'https://unpkg.com/three@0.119.1/examples/jsm/controls/OrbitControls.js';
-			import { GLTFLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/GLTFLoader.js';
+			import { GLTFLoader } from '/GLTFLoader.js';
 			import { DRACOLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/DRACOLoader.js';
 			import Stats from 'https://unpkg.com/three@0.119.1/examples/jsm/libs/stats.module.js';
 
@@ -51,7 +51,9 @@
             var loader = new GLTFLoader();
 
 			loader.load( 'BISHAN ROOM.glb', function ( gltf ) {
-				
+				var model = gltf.scene;
+				model.position.set( 1, 1, 0 );
+                model.scale.set( 0.1, 0.1, 0.1 );
 
 			scene.add( gltf.scene );
 
