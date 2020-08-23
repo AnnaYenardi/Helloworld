@@ -15,103 +15,51 @@
 			import { DRACOLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/DRACOLoader.js';
 			import Stats from 'https://unpkg.com/three@0.119.1/examples/jsm/libs/stats.module.js';
 
-			var scene, camera, dirLight, stats;
-			var renderer, mixer, controls;
+			var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
 
-			var clock = new THREE.Clock();
-			var container = document.getElementById( 'container' );
+            var scene = new THREE.Scene();
 
-			stats = new Stats();
-			container.appendChild( stats.dom );
+            var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 
-			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			renderer.setPixelRatio( window.devicePixelRatio );
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			renderer.outputEncoding = THREE.sRGBEncoding;
-			container.appendChild( renderer.domElement );
-
-			scene = new THREE.Scene();
-			scene.background = new THREE.Color( 0xbfe3dd );
-
-			camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
-			camera.position.set( 5, 2, 8 );
-
-			controls = new OrbitControls( camera, renderer.domElement );
-			controls.target.set( 0, 0.5, 0 );
+            var controls = new OrbitControls( camera, renderer.domElement );
+            controls.target.set( 0, 0.5, 0 );
 			controls.update();
 			controls.enablePan = false;
-			controls.enableDamping = true;
-
-			scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 0.4 ) );
+            controls.enableDamping = true;
+            
+            scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 0.4 ) );
 
 			dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
 			dirLight.position.set( 5, 2, 8 );
-			scene.add( dirLight );
-
-			// envmap
-			var path = 'Park2/';
-			var format = '.jpg';
-			var envMap = new THREE.CubeTextureLoader().load( [
-				path + 'posx' + format, path + 'negx' + format,
-				path + 'posy' + format, path + 'negy' + format,
-				path + 'posz' + format, path + 'negz' + format
-            ] );
+            scene.add( dirLight );
             
             var dracoLoader = new DRACOLoader();
 			dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.119.1/examples/js/libs/draco/gltf/' );
-
-			var loader = new GLTFLoader();
+            
+            var loader = new GLTFLoader();
 			loader.setDRACOLoader( dracoLoader );
 			loader.load( 'BISHAN ROOM.glb', function ( gltf ) {
 
 				var model = gltf.scene;
 				model.position.set( 1, 1, 0 );
-                model.scale.set( 0.01, 0.01, 0.01 );
-                model.traverse( function ( child ) {
-                    if ( child.isMesh ) child.material.envMap = envMap;
+				model.scale.set( 0.01, 0.01, 0.01 );
 
-                } );
-
-                scene.add( model );
-
-                mixer = new THREE.AnimationMixer( model );
-                mixer.clipAction( gltf.animations[ 0 ] ).play();
-
-                animate();
-
-            }, undefined, function ( e ) {
-
-                console.error( e );
-
-            } );
-
-
-            window.onresize = function () {
-
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-
-                renderer.setSize( window.innerWidth, window.innerHeight );
-
-            };
-
+            //controls.update() must be called after any manual changes to the camera's transform
+            camera.position.set( 0, 20, 100 );
+            controls.update();
 
             function animate() {
 
-                requestAnimationFrame( animate );
+	            requestAnimationFrame( animate );
 
-                var delta = clock.getDelta();
+	            // required if controls.enableDamping or controls.autoRotate are set to true
+	            controls.update();
 
-                mixer.update( delta );
-
-                controls.update();
-
-                stats.update();
-
-                renderer.render( scene, camera );
+	            renderer.render( scene, camera );
 
             }
-            
 		</script>
 
 	</body>
