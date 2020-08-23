@@ -35,7 +35,7 @@
 				controls.enablePan = false;
 				controls.enableDamping = true;
 				
-				scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 1 ) );
+				scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 1.5 ) );
 
 				const dracoLoader = new DRACOLoader();
 				dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.119.1/examples/js/libs/draco/gltf/' );
@@ -48,6 +48,8 @@
 						const model = gltf.scene;
 						model.position.set( 0, 0, 0 );
 						model.scale.set( 0.1, 0.1, 0.1 );
+						model.rotation.x = 45/180*Math.PI;
+						model.rotation.y = 45/180*Math.PI;
 						scene.add(model);
 					},
 					xhr => console.log(`${(xhr.loaded/xhr.total * 100)}% loaded`),
