@@ -16,7 +16,7 @@
 			import Stats from 'https://unpkg.com/three@0.119.1/examples/jsm/libs/stats.module.js';
 
             var scene, camera, dirLight, stats;
-            
+
             var renderer = new THREE.WebGLRenderer();
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
@@ -31,9 +31,9 @@
 			controls.enablePan = false;
             controls.enableDamping = true;
             
-            scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 0.4 ) );
+            scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 100 ) );
 
-			dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+			dirLight = new THREE.DirectionalLight( 0xffffff, 100 );
 			dirLight.position.set( 5, 2, 8 );
             scene.add( dirLight );
             
