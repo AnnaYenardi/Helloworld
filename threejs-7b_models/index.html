@@ -7,6 +7,12 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <base href="/">
         <link type="text/css" rel="stylesheet" href="main.css">
+        <system.webServer>
+            <staticContent>
+              <remove fileExtension=".woff2" />
+              <mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />
+            </staticContent>
+        </system.webServer>
 		<style>
 			body {
 				background-color: #bfe3dd;
