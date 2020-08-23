@@ -33,13 +33,22 @@
 			controls.enablePan = false;
             controls.enableDamping = true;
             
-            scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 100 ) );
+            scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 1 ) );
 
-			dirLight = new THREE.DirectionalLight( 0xffffff, 100 );
+			dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
 			dirLight.position.set( 5, 2, 8 );
             scene.add( dirLight );
             
-            var dracoLoader = new DRACOLoader();
+            // envmap
+			var path = 'Park2/';
+			var format = '.jpg';
+			var envMap = new THREE.CubeTextureLoader().load( [
+				path + 'posx' + format, path + 'negx' + format,
+				path + 'posy' + format, path + 'negy' + format,
+				path + 'posz' + format, path + 'negz' + format
+			] );
+
+			var dracoLoader = new DRACOLoader();
 			dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.119.1/examples/js/libs/draco/gltf/' );
             
             var loader = new GLTFLoader();
@@ -49,9 +58,12 @@
 				var model = gltf.scene;
 				model.position.set( 1, 1, 0 );
                 model.scale.set( 0.1, 0.1, 0.1 );
-            })    
+				model.traverse( function ( child ) {
 
-            //controls.update() must be called after any manual changes to the camera's transform
+					if ( child.isMesh ) child.material.envMap = envMap;
+
+				} )
+			})   
             camera.position.set( 0, 20, 100 );
             controls.update();
 
