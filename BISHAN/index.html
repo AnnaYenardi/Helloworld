@@ -30,12 +30,12 @@
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
 
 				controls = new OrbitControls( camera, renderer.domElement );
-				controls.target.set( 0, 0.5, 0 );
+				controls.target.set( -20, 0, 0 );
 				controls.update();
 				controls.enablePan = false;
 				controls.enableDamping = true;
 				
-				scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 1.2 ) );
+				scene.add( new THREE.HemisphereLight( 0xf7f0e9, 0x000000, 1 ) );
 
 				const dracoLoader = new DRACOLoader();
 				dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.119.1/examples/js/libs/draco/gltf/' );
