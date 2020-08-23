@@ -15,7 +15,9 @@
 			import { DRACOLoader } from 'https://unpkg.com/three@0.119.1/examples/jsm/loaders/DRACOLoader.js';
 			import Stats from 'https://unpkg.com/three@0.119.1/examples/jsm/libs/stats.module.js';
 
-			var renderer = new THREE.WebGLRenderer();
+            var scene, camera, dirLight, stats;
+            
+            var renderer = new THREE.WebGLRenderer();
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
 
