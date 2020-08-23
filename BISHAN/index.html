@@ -35,7 +35,7 @@
 				controls.enablePan = false;
 				controls.enableDamping = true;
 				
-				scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 1.5 ) );
+				scene.add( new THREE.HemisphereLight( 0xffffff, 0x000000, 1.2 ) );
 
 				const dracoLoader = new DRACOLoader();
 				dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.119.1/examples/js/libs/draco/gltf/' );
@@ -46,7 +46,7 @@
 					'BISHAN ROOM.glb', 
 					gltf => {
 						const model = gltf.scene;
-						model.position.set( 0, -2, 0 );
+						model.position.set( 0, -10, 0 );
 						model.scale.set( 0.25, 0.25, 0.25 );
 						model.rotation.x = -90/180*Math.PI;
 						
