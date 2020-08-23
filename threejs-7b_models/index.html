@@ -6,8 +6,6 @@
 
 		<div id="container"></div>
 
-		
-
 		<script type="module">
 		
 			import * as THREE from 'https://unpkg.com/three@0.119.1/build/three.module.js';
@@ -50,7 +48,16 @@
 			dirLight.position.set( 5, 2, 8 );
 			scene.add( dirLight );
 
-			var dracoLoader = new DRACOLoader();
+			// envmap
+			var path = 'Park2/';
+			var format = '.jpg';
+			var envMap = new THREE.CubeTextureLoader().load( [
+				path + 'posx' + format, path + 'negx' + format,
+				path + 'posy' + format, path + 'negy' + format,
+				path + 'posz' + format, path + 'negz' + format
+            ] );
+            
+            var dracoLoader = new DRACOLoader();
 			dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.119.1/examples/js/libs/draco/gltf/' );
 
 			var loader = new GLTFLoader();
