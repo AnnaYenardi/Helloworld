@@ -47,9 +47,9 @@
 					gltf => {
 						const model = gltf.scene;
 						model.position.set( 0, 0, 0 );
-						model.scale.set( 0.1, 0.1, 0.1 );
+						model.scale.set( 0.25, 0.25, 0.25 );
 						model.rotation.x = -45/180*Math.PI;
-						model.rotation.y = -90/180*Math.PI;
+						
 						scene.add(model);
 					},
 					xhr => console.log(`${(xhr.loaded/xhr.total * 100)}% loaded`),
