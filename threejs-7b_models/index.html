@@ -67,9 +67,51 @@
 				var model = gltf.scene;
 				model.position.set( 1, 1, 0 );
                 model.scale.set( 0.01, 0.01, 0.01 );
-            })
-            
+                model.traverse( function ( child ) {
+                    if ( child.isMesh ) child.material.envMap = envMap;
 
+                } );
+
+                scene.add( model );
+
+                mixer = new THREE.AnimationMixer( model );
+                mixer.clipAction( gltf.animations[ 0 ] ).play();
+
+                animate();
+
+            }, undefined, function ( e ) {
+
+                console.error( e );
+
+            } );
+
+
+            window.onresize = function () {
+
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize( window.innerWidth, window.innerHeight );
+
+            };
+
+
+            function animate() {
+
+                requestAnimationFrame( animate );
+
+                var delta = clock.getDelta();
+
+                mixer.update( delta );
+
+                controls.update();
+
+                stats.update();
+
+                renderer.render( scene, camera );
+
+            }
+            
 		</script>
 
 	</body>
