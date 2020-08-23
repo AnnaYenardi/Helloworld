@@ -47,36 +47,22 @@
 				path + 'posy' + format, path + 'negy' + format,
 				path + 'posz' + format, path + 'negz' + format
 			] );
-
-			var dracoLoader = new DRACOLoader();
-			dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.119.1/examples/js/libs/draco/gltf/' );
             
             var loader = new GLTFLoader();
-			loader.setDRACOLoader( dracoLoader );
-			loader.load( 'BISHAN ROOM.glb', function ( gltf ) {
 
+			loader.load( 'BISHAN ROOM.glb', function ( gltf ) {
 				var model = gltf.scene;
 				model.position.set( 1, 1, 0 );
                 model.scale.set( 0.1, 0.1, 0.1 );
-				model.traverse( function ( child ) {
 
-					if ( child.isMesh ) child.material.envMap = envMap;
+			scene.add( gltf.scene );
 
-				} )
-			})
+			}, undefined, function ( error ) {
 
-			scene.add( model );
+			console.error( error );
 
-				mixer = new THREE.AnimationMixer( model );
-				mixer.clipAction( gltf.animations[ 0 ] ).play();
+			} )
 
-				animate();
-
-			}, undefined, function ( e ) {
-
-				console.error( e );
-
-			} );
             camera.position.set( 0, 20, 100 );
             controls.update();
 
