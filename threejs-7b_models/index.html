@@ -46,7 +46,7 @@
 
 				var model = gltf.scene;
 				model.position.set( 1, 1, 0 );
-                model.scale.set( 0.01, 0.01, 0.01 );
+                model.scale.set( 0.1, 0.1, 0.1 );
             })    
 
             //controls.update() must be called after any manual changes to the camera's transform
@@ -57,7 +57,6 @@
 
 	            requestAnimationFrame( animate );
 
-	            // required if controls.enableDamping or controls.autoRotate are set to true
 	            controls.update();
 
 	            renderer.render( scene, camera );
